@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Player from "../../Player/Player";
 import { Item } from "../../../reducers/reducers";
 import "./style.scss";
@@ -6,14 +6,24 @@ import "./style.scss";
 type Props = {
   listOptions: Array<Item>;
   numberOption: number;
+  numberQuestion: number
 };
-
 const BlockDescriptions: React.FC<Props> = (props: Props) => {
-  const { numberOption, listOptions } = props;
+  const { numberOption, listOptions, numberQuestion } = props;
+  const [ hiddenDescription, setHiddenDescription] = useState(true);
+
+
+  useEffect(() => {
+    setHiddenDescription(false);
+  }, [numberOption])
+
+  useEffect(() => {
+    setHiddenDescription(true)
+  }, [numberQuestion]);
 
   return (
     <div className="wrapper__description">
-      {listOptions[numberOption - 1] ? (
+      {listOptions[numberOption - 1] && !hiddenDescription  ? (
         <>
           <div className="description__title">
             <div
@@ -27,9 +37,7 @@ const BlockDescriptions: React.FC<Props> = (props: Props) => {
             <div className="description__audio">
               <h4>{listOptions[numberOption - 1].name}</h4>
               <h5>{listOptions[numberOption - 1].species}</h5>
-              <Player
-                audio={listOptions[numberOption - 1].audio}
-              />
+              <Player audio={listOptions[numberOption - 1].audio} autoPlay={true} numberOption={numberOption}/>
             </div>
           </div>
           <p>{listOptions[numberOption - 1].description}</p>

@@ -44,6 +44,14 @@
         border-radius: 50%;
         margin-right: 15px;
       }
+
+      .incorrect_answer{
+        background-color: red;
+      }
+
+      .correct_answer{
+        background-color: #00bc8c;
+      }
     }
   }
 }
