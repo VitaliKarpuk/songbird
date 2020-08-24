@@ -6,11 +6,13 @@ import "./style.scss";
 
 type Props = {
   audio?: string;
+  autoPlay: boolean;
+  numberOption?: number;
 };
 
 const Player: React.FC<Props> = (props: Props) => {
-  const { audio } = props;
-  const [startPlay, setStatrtPlay] = useState(false);
+  const { audio, autoPlay, numberOption } = props;
+  const [startPlay, setStatrtPlay] = useState(autoPlay);
   const player = useRef("audio_tag");
   const pause = () => {
     setStatrtPlay(false);
@@ -21,10 +23,15 @@ const Player: React.FC<Props> = (props: Props) => {
     player.current.container.current.childNodes[0].play();
   };
 
+  useEffect(() => {
+    if (numberOption) {
+      setStatrtPlay(true);
+    }
+  }, [numberOption]);
 
   return (
     <div className="wrapper__audio">
-      <div className="btn-play" onClick={!startPlay ? play : pause}>
+      <div className="btn-play" onClick={startPlay ? pause : play}>
         {!startPlay ? (
           <span>
             <i className="fas fa-play" />
@@ -36,9 +43,10 @@ const Player: React.FC<Props> = (props: Props) => {
         )}
       </div>
       <AudioPlayer
-        autoPlay
         ref={player}
         src={audio}
+        autoPlay={autoPlay}
+        onCanPlay={() => pause()}
       />
     </div>
   );

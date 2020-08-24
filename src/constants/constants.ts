@@ -1,1 +1,2 @@
 export const GET_LIST_OPTIONS = 'GET_LIST_OPTIONS';
+export const SET_ANSWER = 'SET_ANSWER';
