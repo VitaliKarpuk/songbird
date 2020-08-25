@@ -32,7 +32,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
     }
 
     .hidden-bird {
-      background-image: url(../../images/hidden-bird.jpg);
+      background-image: url(../../images/hidden-bird.jpg) !important;
     }
   }
 

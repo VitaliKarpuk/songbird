@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import BlockOptions from "./BlockOptions/BlockOptions";
 import BlockDescriptions from "./BlockDescription/BlockDescriptions";
 import { Item } from "../../reducers/reducers";
@@ -14,7 +14,8 @@ type Props = {
   activeBtn: boolean;
   activeNextBtn: () => void;
   handleCorrectAnswer: () => void;
-  showScore: () => void;
+  showScore: (number: number) => void;
+  
 };
 const BlockAnswerOptions: React.FC<Props> = (props: Props): JSX.Element => {
   const {

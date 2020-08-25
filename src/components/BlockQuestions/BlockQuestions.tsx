@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Player from "../Player/Player";
-import { Item } from "../../reducers/reducers";
-import img from "../../images/hidden-bird.jpg";
 
 import "./style.scss";
 
 type Props = {
   question: any;
   showCorrectAnswer: boolean;
+  stopPlayer: boolean;
 };
 
 const BlockQuestions2: React.FC<Props> = (props: Props) => {
-  const { question, showCorrectAnswer } = props;
-
+  const { question, showCorrectAnswer, stopPlayer } = props;
   return (
     <div className="block-questions">
       <div className="image-bird">
         <span
-          className="hidden-bird"
+          className={!showCorrectAnswer ? "hidden-bird" : ''}
           style={{
             backgroundImage: `url('${
-              !showCorrectAnswer ? img : question.image
+              !showCorrectAnswer ? '' : question.image
             }')`,
           }}
         ></span>
@@ -29,7 +27,7 @@ const BlockQuestions2: React.FC<Props> = (props: Props) => {
         <div className="title__bird">
           <h2>{!showCorrectAnswer ? "***" : question.name}</h2>
         </div>
-        {question && <Player audio={question.audio} autoPlay={false} />}
+        {question && <Player audio={question.audio} autoPlay={false} stopPlayer={stopPlayer} />}
       </div>
     </div>
   );

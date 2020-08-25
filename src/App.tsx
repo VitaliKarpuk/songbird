@@ -7,7 +7,6 @@ import getListOptions from "./action/getListOptions";
 import GameOver from "./components/GameOver/GameOver";
 import birdsData from "./birdsData";
 import { stateType } from "./reducers/reducers";
-import { CircularProgress } from "@material-ui/core";
 
 interface Item {
   id: number;
@@ -19,10 +18,10 @@ interface Item {
 }
 type Props = {
   getListOptions: (arg: Array<Item>) => void;
-  state: stateType;
+  listOptions: any;
 };
 
-const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
+const App: React.FC<Props> = ({ getListOptions, listOptions }: Props) => {
   const [numberQuestion, setNumberQuestion] = useState(0);
   const [numberOption, setNumberOption] = useState<number>(0);
   const [question, setQuestion] = useState();
@@ -30,6 +29,7 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [stopPlayer, setStopPlayer] = useState(false);
 
   useEffect(() => {
     if (birdsData) {
@@ -43,6 +43,7 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
 
   const handleCorrectAnswer = () => {
     setShowCorrectAnswer(true);
+    setStopPlayer(true)
   };
 
   const activeNextBtn = () => {
@@ -50,7 +51,8 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
   };
 
   const handleNextQuestion = () => {
-    if (numberQuestion < state.listOptions.length - 1) {
+    setStopPlayer(false)
+    if (numberQuestion < listOptions.length - 1) {
       setNumberQuestion((prev) => prev + 1);
     } else {
       setShowResult(true)
@@ -68,12 +70,13 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
     setShowResult(false);
     setScore(0)
   };
+
   useEffect(() => {
-    if (state.listOptions) {
+    if (listOptions) {
       const index = Math.floor(Math.random() * 6);
-      setQuestion(state.listOptions[index]);
+      setQuestion(listOptions[index]);
     }
-  }, [state.listOptions]);
+  }, [listOptions]);
 
   return (
     <>
@@ -84,9 +87,10 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
             <BlockQuestions
               question={question}
               showCorrectAnswer={showCorrectAnswer}
+              stopPlayer={stopPlayer}
             />
             <BlockAnswerOptions
-              listOptions={state.listOptions}
+              listOptions={listOptions}
               numberOption={numberOption}
               question={question}
               handelOption={handelOption}
@@ -101,15 +105,17 @@ const App: React.FC<Props> = ({ getListOptions, state }: Props) => {
         ) : (
           <GameOver handleReapetGame={handleReapetGame} score={score}/>
         )}
-        {/* <CircularProgress /> */}
       </div>
     </>
   );
 };
 
-const mapStateToProps = (state: stateType) => ({
-  state,
-});
+const mapStateToProps = (state: stateType) => {
+  return{
+    listOptions: state.listOptions
+  }
+
+};
 
 const mapDispatchToProps = (dispatch: any) => {
   return {

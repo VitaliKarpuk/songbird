@@ -8,12 +8,14 @@ type Props = {
   audio?: string;
   autoPlay: boolean;
   numberOption?: number;
+  stopPlayer?: boolean;
 };
 
 const Player: React.FC<Props> = (props: Props) => {
-  const { audio, autoPlay, numberOption } = props;
+  const { audio, autoPlay, numberOption, stopPlayer } = props;
+
   const [startPlay, setStatrtPlay] = useState(autoPlay);
-  const player = useRef("audio_tag");
+  const player: any = useRef("audio_tag");
   const pause = () => {
     setStatrtPlay(false);
     player.current.container.current.childNodes[0].pause();
@@ -28,6 +30,12 @@ const Player: React.FC<Props> = (props: Props) => {
       setStatrtPlay(true);
     }
   }, [numberOption]);
+
+  useEffect(() => {
+    if (stopPlayer) {
+      pause();
+    }
+  }, [stopPlayer]);
 
   return (
     <div className="wrapper__audio">

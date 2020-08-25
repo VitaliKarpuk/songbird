@@ -1,6 +1,5 @@
 import { GET_LIST_OPTIONS } from '../constants/constants';
 
-
 interface actionType1 {
   type: typeof GET_LIST_OPTIONS, 
   payload:Array<[]>
@@ -21,11 +20,13 @@ export interface stateType {
 }
 
 
-const initialState : stateType = {
+
+const initialState  = {
   listOptions: [],
 }
+// type StateType = typeof initialState;
 
-const reducer = (state = initialState, action:actionType) : stateType  =>  {
+const reducer = (state = initialState, action:actionType)   =>  {
   switch (action.type) {
     case GET_LIST_OPTIONS:
       return { 

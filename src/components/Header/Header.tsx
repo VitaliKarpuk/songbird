@@ -25,7 +25,7 @@ const Header: React.FC<Props> = (props: Props) => {
         </div>
         <ul className="header__list-questions">
           {listQuestion.map((item, index) => {
-            return index !== numberQuestion ?  <li>{item}</li> : <li className='question_active'>{item}</li> 
+            return index !== numberQuestion ?  <li key={index}>{item}</li> : <li className='question_active' key={index}>{item}</li> 
           })}
         </ul>
       </header>

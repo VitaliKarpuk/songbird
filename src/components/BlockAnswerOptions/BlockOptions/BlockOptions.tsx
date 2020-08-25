@@ -5,7 +5,9 @@ import "./style.scss";
 type Props = {
   listOptions: Array<Item>;
   handelOption: (id: number) => void;
-  question: {};
+  question: {
+    id: number
+  };
   activeNextBtn: () => void;
   activeBtn: boolean;
   handleCorrectAnswer: () => void;
@@ -29,7 +31,7 @@ const BlockOptions: React.FC<Props> = (props: Props) => {
   } = props;
   const [list, setList] = useState(listOptions);
   const [scoreQuestion, setScoreQuestion] = useState(5);
-  const audio = useRef("audio_tag");
+  const audio: any = useRef("audio_tag");
 
   const handleAnswer = (id: number) => {
     handelOption(id);
@@ -63,7 +65,7 @@ const BlockOptions: React.FC<Props> = (props: Props) => {
   return (
     <div className="wrapper__option">
       <ul>
-        {list.map((item) => {
+        {list.map((item: any) => {
           return (
             <li key={item.id} onClick={() => handleAnswer(item.id)}>
               <span className={item.classSpan}></span>
