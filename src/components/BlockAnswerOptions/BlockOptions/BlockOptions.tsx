@@ -43,6 +43,7 @@ const BlockOptions: React.FC<Props> = (props: Props) => {
           audio.current.play();
           return { ...item, classSpan: "incorrect_answer" };
         } else if (item.id === id && question.id === id) {
+          console.log(item.name)
           audio.current.src = urlWin;
           audio.current.play();
           activeNextBtn();
